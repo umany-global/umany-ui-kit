@@ -1,4 +1,22 @@
 export default {
+  overrides: {
+    MuiButton: {
+      root: {
+        borderRadius: "20px",
+        margin: "5px",
+      },
+    },
+    MuiAppBar: {
+      colorPrimary: {
+        backgroundColor: "#61ccdb",
+      },
+    },
+    MuiInputLabel: {
+      root: {
+        margin: "10px",
+      },
+    },
+  },
   palette: {
     text: {
       primary: "#808080",

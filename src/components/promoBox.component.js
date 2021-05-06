@@ -21,15 +21,15 @@ const useStyles = makeStyles((theme) => {
   console.log("theme", theme);
   return {
     primaryButton: {
-      backgroundColor: "blue",
-      color: "white",
+      backgroundColor: theme.palette.companyBlue.main,
+      color: theme.palette.companyBlue.contrastText,
     },
     primaryDefault: {
-      backgroundColor: "gray",
-      color: "white",
+      backgroundColor: theme.palette.companyDefault.main,
+      color: theme.palette.companyDefault.contrastText,
     },
     subtitle: {
-      color: "#61ccdb",
+      color: theme.palette.companyBlue.main,
       fontSize: "20px",
     },
   };

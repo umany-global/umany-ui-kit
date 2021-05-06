@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 
 // ICONS
-// import RotateRight from "@material-ui/icons/RotateRight";
+import { RotateRight } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
     "& ul li": {
+      cursor: "pointer",
       marginBottom: "10px",
       display: "flex",
       padding: "10px",
@@ -39,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
       border: "1px solid #cccccc",
       borderRadius: "50px",
       boxShadow: "-3px 3px 2px #cccccc",
+    },
+    "& ul li:hover, & ul li.active": {
+      backgroundColor: theme.palette.companyBlue.main,
+      color: theme.palette.companyBlue.contrastText,
     },
     "& ul li label": {
       minWidth: "100px",
@@ -52,13 +57,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UmanyList = ({ items }) => {
+const UmanyList = ({ items, onInput }) => {
   const classes = useStyles();
+  const [current, setCurrent] = React.useState({});
+  const handleCurrent = (item) => {
+    setCurrent(item);
+    if (onInput) onInput(item);
+  };
   const today = moment().format("ll LTS");
   return (
     <Grid container className={classes.root}>
       <Grid container alignItems="center" justify="center" spacing={1}>
-        {/* <RotateRight style={{ marginLeft: "-29px", marginRight: "10px" }} /> */}
+        <RotateRight style={{ marginLeft: "-29px", marginRight: "10px" }} />
         <div style={{ display: "flex", flexDirection: "column" }}>
           <strong>Ultima Actualizacion</strong>
           <label>{today}</label>
@@ -76,7 +86,13 @@ const UmanyList = ({ items }) => {
               {items.length
                 ? items.map((item, ind) => {
                     return (
-                      <li key={`item-${ind}`}>
+                      <li
+                        onClick={() => {
+                          handleCurrent(item);
+                        }}
+                        className={`${current == item ? "active" : ""}`}
+                        key={`item-${ind}`}
+                      >
                         <label>{item.amount}</label>
                         <label>{item.product}</label>
                         <label>{item.discount}</label>
@@ -94,6 +110,7 @@ const UmanyList = ({ items }) => {
 
 UmanyList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
+  onInput: PropTypes.func,
 };
 
 export default UmanyList;
