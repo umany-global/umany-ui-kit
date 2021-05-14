@@ -10,10 +10,10 @@ import moment from "moment";
 
 const RoundedLogo = withStyles((theme) => ({
   root: {
-    padding: 60,
+    padding: 0,
     margin: 20,
-    width: 50,
-    height: 80,
+    width: 120,
+    height: 120,
   },
 }))(Avatar);
 
@@ -35,38 +35,41 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const PromoBox = ({ item, confirmation }) => {
+const PromoBox = ({ item = { campaign: {} }, brand, confirmation }) => {
   const classes = useStyles();
-  const today = moment().format("ll LTS");
+  // const today = moment().format("ll LTS");
+  const product = item.campaign.product;
+  const prices = item.campaign.deal;
+  const foundation = `http://meleeislandcontents.umany.global/makers/${item.project.maker.id}/logo-medium`;
+  const logo = `http://meleeislandcontents.umany.global/brands/${brand.id}/logo-medium`;
   return (
     <Paper elevation={3} style={{ padding: 20 }}>
       <Grid container direction="column" justify="center">
         <Grid container justify="center">
           <Grid item>
-            <RoundedLogo src={item.business} children="Logo Empresa" />
+            <RoundedLogo src={logo} children="Logo Empresa" />
           </Grid>
           <Grid item>
-            <RoundedLogo src={item.foundation} children="Logo Fundacion" />
+            <RoundedLogo src={foundation} children="Logo Fundacion" />
           </Grid>
         </Grid>
         <Grid item>
           <Typography className={classes.subtitle}>
-            Con tu compra <strong>{item.product}</strong>
+            Con tu compra <strong>{product.name}</strong>
           </Typography>
           <Typography className={classes.subtitle}>
-            {item.discount}% de descuento
+            {prices.discount
+              ? `${prices.discount}% de descuento`
+              : `Compra ${prices.buy} y obten ${prices.get}`}
           </Typography>
         </Grid>
         <Grid item style={{ margin: "20px" }}>
           <Typography variant="subtitle1">Tu cliente paga</Typography>
-          <Typography variant="subtitle1">${item.amount}</Typography>item
+          <Typography variant="subtitle1">${product.price}</Typography>
         </Grid>
         <Grid item style={{ margin: "20px" }}>
           <Typography variant="subtitle1">Y eligio destinar</Typography>
-          <Typography variant="subtitle1">
-            $17 a Utiles y transporte escolar, guardapolvos y conexion a
-            internet
-          </Typography>
+          <Typography variant="subtitle1">{item.project.needs_desc}</Typography>
         </Grid>
         <Grid item style={{ marginTop: "3em" }}>
           <Typography variant="subtitle1">
@@ -100,6 +103,7 @@ const PromoBox = ({ item, confirmation }) => {
 
 PromoBox.propTypes = {
   item: PropTypes.object,
+  brand: PropTypes.object,
   confirmation: PropTypes.func.isRequired,
 };
 

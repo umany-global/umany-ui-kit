@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
     "& ul li": {
-      cursor: "pointer",
       marginBottom: "10px",
       display: "flex",
       padding: "10px",
@@ -40,10 +39,6 @@ const useStyles = makeStyles((theme) => ({
       border: "1px solid #cccccc",
       borderRadius: "50px",
       boxShadow: "-3px 3px 2px #cccccc",
-    },
-    "& ul li:hover, & ul li.active": {
-      backgroundColor: theme.palette.companyBlue.main,
-      color: theme.palette.companyBlue.contrastText,
     },
     "& ul li label": {
       minWidth: "100px",
@@ -85,6 +80,7 @@ const UmanyList = ({ items, onInput }) => {
             <ul>
               {items.length
                 ? items.map((item, ind) => {
+                    const product = item.campaign.product;
                     return (
                       <li
                         onClick={() => {
@@ -93,9 +89,9 @@ const UmanyList = ({ items, onInput }) => {
                         className={`${current == item ? "active" : ""}`}
                         key={`item-${ind}`}
                       >
-                        <label>{item.amount}</label>
-                        <label>{item.product}</label>
-                        <label>{item.discount}</label>
+                        <label>{item.qty}</label>
+                        <label>{product.name}</label>
+                        <label>${product.price}</label>
                       </li>
                     );
                   })
