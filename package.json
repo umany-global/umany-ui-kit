@@ -1,6 +1,6 @@
 {
   "name": "umanyuikit",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "description": "Material flavor components",
   "type": "module",
   "main": "dist/index.js",
