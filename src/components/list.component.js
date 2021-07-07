@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import moment from "moment";
+import Hidden from "@material-ui/core/Hidden";
 
 // ICONS
 import { RotateRight } from "@material-ui/icons";
@@ -50,6 +51,32 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: theme.spacing(4, 0, 2),
   },
+  [theme.breakpoints.down("md")]: {
+    box: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    list: {
+      "& label d": {
+        width: 100,
+      },
+      "& label p": {
+        textAlign: "initial",
+        padding: 0,
+        paddingLeft: 10,
+        margin: 0,
+      },
+      "& label": {
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "0 20px",
+      },
+
+      "& ul li label:last-child": {
+        borderLeft: "initial",
+      },
+    },
+  },
 }));
 
 const UmanyList = ({ items, onInput }) => {
@@ -73,9 +100,11 @@ const UmanyList = ({ items, onInput }) => {
         <Grid item xs={12}>
           <ul className={classes.list}>
             <li>
-              <ol>Cantidad</ol>
-              <ol>Producto</ol>
-              <ol>Descuento</ol>
+              <Hidden mdDown>
+                <ol>Cantidad</ol>
+                <ol>Producto</ol>
+                <ol>Descuento</ol>
+              </Hidden>
             </li>
             <ul>
               {items.length
@@ -86,12 +115,29 @@ const UmanyList = ({ items, onInput }) => {
                         onClick={() => {
                           handleCurrent(item);
                         }}
-                        className={`${current == item ? "active" : ""}`}
+                        className={`${classes.box} ${
+                          current == item ? "active" : ""
+                        }`}
                         key={`item-${ind}`}
                       >
-                        <label>{item.qty}</label>
-                        <label>{product.name}</label>
-                        <label>${product.price}</label>
+                        <label>
+                          <Hidden mdUp>
+                            <b>Cantidad</b>
+                          </Hidden>
+                          <p>{item.qty}</p>
+                        </label>
+                        <label>
+                          <Hidden mdUp>
+                            <b>Producto</b>
+                          </Hidden>
+                          <p>{product.name}</p>
+                        </label>
+                        <label>
+                          <Hidden mdUp>
+                            <b>Descuento</b>
+                          </Hidden>
+                          <p>${product.price}</p>
+                        </label>
                       </li>
                     );
                   })
